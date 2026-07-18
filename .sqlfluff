@@ -1,6 +1,7 @@
 # see: https://docs.sqlfluff.com/en/stable/configuration/setting_configuration.html
 [sqlfluff]
 dialect = ansi
+exclude_rules = CP02
 max_line_length = 120
 
 [sqlfluff:indentation]
@@ -11,9 +12,6 @@ aliasing = implicit
 
 [sqlfluff:rules:capitalisation.keywords]
 capitalisation_policy = upper
-
-[sqlfluff:rules:capitalisation.identifiers]
-extended_capitalisation_policy = lower
 
 [sqlfluff:rules:capitalisation.functions]
 extended_capitalisation_policy = upper
