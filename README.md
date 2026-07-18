@@ -38,5 +38,5 @@ SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';
 ### SQLFluff を使った方法
 
 ```bash
-sqlfluff fix sample.sql
+sqlfluff fix test.sql
 ```
