@@ -6,13 +6,13 @@
 # PostgreSQL のコンテナを起動する
 docker run --name sql-zero -e POSTGRES_PASSWORD=password postgres
 
+# PostgreSQL のコンテナを再起動する
+docker start -ai sql-zero
+
 # PostgreSQL のコンテナに接続する
 docker exec -it sql-zero psql -U postgres -d shop
 # 初回
 docker exec -it sql-zero psql -U postgres -d postgres
-
-# PostgreSQL のコンテナを再起動する
-docker start -ai sql-zero
 
 # PostgreSQL のコンテナを削除する
 docker rm sql-zero
