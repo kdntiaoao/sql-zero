@@ -60,3 +60,16 @@ FROM Shohin
 WHERE
   (hanbai_tanka * 0.9 - shiire_tanka > 100)
   AND (shohin_bunrui = '事務用品' OR shohin_bunrui = 'キッチン用品');
+
+-- 第 3 章
+
+SELECT
+  shohin_bunrui,
+  SUM(hanbai_tanka) AS sum_hanbai_tanka,
+  SUM(shiire_tanka) AS sum_shiire_tanka
+FROM Shohin
+GROUP BY shohin_bunrui
+HAVING SUM(hanbai_tanka) > SUM(shiire_tanka) * 1.5;
+
+SELECT * FROM Shohin
+ORDER BY torokubi DESC, hanbai_tanka asc;
