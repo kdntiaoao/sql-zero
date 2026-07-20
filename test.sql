@@ -97,8 +97,6 @@ CREATE TABLE ShohinSaeki
 INSERT INTO ShohinSaeki
 SELECT
   shohin_id,
-  shohin_id,
-  hanbai_tanka,
   shiire_tanka,
   hanbai_tanka - shiire_tanka AS saeki
 FROM Shohin;
@@ -117,14 +115,18 @@ AS (
   FROM Shohin
   WHERE hanbai_tanka >= 1000 AND torokubi = '2009-09-20'
 );
-SELECT * FROM ViewRenshu5_1;
+SELECT
+  shohin_mei,
+  hanbai_tanka,
+  torokubi
+FROM ViewRenshu5_1;
 
 SELECT
   shohin_id,
   shohin_mei,
   shohin_bunrui,
   hanbai_tanka,
-  (SELECT AVG(hanbai_tanka) FROM Shohin) AS hanbai_tanka_all
+  (SELECT AVG(S2.hanbai_tanka) FROM Shohin S2) AS hanbai_tanka_all
 FROM Shohin;
 
 CREATE VIEW AvgTankaByBunrui (
@@ -144,4 +146,10 @@ AS (SELECT
     WHERE S2.shohin_bunrui = S1.shohin_bunrui
   ) AS avg_hanbai_tanka
 FROM Shohin S1);
-SELECT * FROM AvgTankaByBunrui;
+SELECT
+  shohin_id,
+  shohin_mei,
+  shohin_bunrui,
+  hanbai_tanka,
+  avg_hanbai_tanka
+FROM AvgTankaByBunrui;
