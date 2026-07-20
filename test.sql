@@ -103,4 +103,45 @@ SELECT
   hanbai_tanka - shiire_tanka AS saeki
 FROM Shohin;
 
-UPDATE ShohinSaeki SET hanbai_tanka = 3000, saeki = 200 WHERE shohin_id = '0003';
+UPDATE ShohinSaeki SET hanbai_tanka = 3000, saeki = 200
+WHERE shohin_id = '0003';
+
+-- 第 5 章
+
+CREATE VIEW ViewRenshu5_1 (shohin_mei, hanbai_tanka, torokubi)
+AS (
+  SELECT
+    shohin_mei,
+    hanbai_tanka,
+    torokubi
+  FROM Shohin
+  WHERE hanbai_tanka >= 1000 AND torokubi = '2009-09-20'
+);
+SELECT * FROM ViewRenshu5_1;
+
+SELECT
+  shohin_id,
+  shohin_mei,
+  shohin_bunrui,
+  hanbai_tanka,
+  (SELECT AVG(hanbai_tanka) FROM Shohin) AS hanbai_tanka_all
+FROM Shohin;
+
+CREATE VIEW AvgTankaByBunrui (
+  shohin_id,
+  shohin_mei,
+  shohin_bunrui,
+  hanbai_tanka,
+  avg_hanbai_tanka
+)
+AS (SELECT
+  shohin_id,
+  shohin_mei,
+  shohin_bunrui,
+  hanbai_tanka,
+  (
+    SELECT AVG(S2.hanbai_tanka) FROM Shohin S2
+    WHERE S2.shohin_bunrui = S1.shohin_bunrui
+  ) AS avg_hanbai_tanka
+FROM Shohin S1);
+SELECT * FROM AvgTankaByBunrui;
