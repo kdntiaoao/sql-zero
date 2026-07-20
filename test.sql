@@ -71,5 +71,36 @@ FROM Shohin
 GROUP BY shohin_bunrui
 HAVING SUM(hanbai_tanka) > SUM(shiire_tanka) * 1.5;
 
-SELECT * FROM Shohin
-ORDER BY torokubi DESC, hanbai_tanka asc;
+-- 第 4 章
+
+DELETE FROM Shohin;
+
+INSERT INTO Shohin VALUES ('0001', 'Tシャツ', '衣服', 1000, 500, '2009-09-20');
+INSERT INTO Shohin VALUES ('0002', '穴あけパンチ', '事務用品', 500, 320, '2009-09-11');
+INSERT INTO Shohin VALUES ('0003', 'カッターシャツ', '衣服', 4000, 2800, NULL);
+INSERT INTO Shohin VALUES ('0004', '包丁', 'キッチン用品', 3000, 2800, '2009-09-20');
+INSERT INTO Shohin VALUES ('0005', '圧力鍋', 'キッチン用品', 6800, 5000, '2009-01-15');
+INSERT INTO Shohin VALUES ('0006', 'フォーク', 'キッチン用品', 500, NULL, '2009-09-20');
+INSERT INTO Shohin VALUES ('0007', 'おろしがね', 'キッチン用品', 880, 790, '2008-04-28');
+INSERT INTO Shohin VALUES ('0008', 'ボールペン', '事務用品', 100, NULL, '2009-11-11');
+
+CREATE TABLE ShohinSaeki
+(
+  shohin_id CHAR(4) NOT NULL,
+  shohin_mei VARCHAR(100) NOT NULL,
+  hanbai_tanka INTEGER,
+  shiire_tanka INTEGER,
+  saeki INTEGER,
+  PRIMARY KEY (shohin_id)
+);
+
+INSERT INTO ShohinSaeki
+SELECT
+  shohin_id,
+  shohin_id,
+  hanbai_tanka,
+  shiire_tanka,
+  hanbai_tanka - shiire_tanka AS saeki
+FROM Shohin;
+
+UPDATE ShohinSaeki SET hanbai_tanka = 3000, saeki = 200 WHERE shohin_id = '0003';
