@@ -174,3 +174,27 @@ SELECT
   SUM(CASE WHEN hanbai_tanka BETWEEN 1001 AND 3000 THEN 1 ELSE 0 END) AS mid_price,
   SUM(CASE WHEN hanbai_tanka >= 3001 THEN 1 ELSE 0 END) AS high_price
 FROM Shohin;
+
+-- 第 7 章
+SELECT * -- noqa: disable=AM04
+FROM Shohin
+UNION DISTINCT
+SELECT *
+FROM Shohin
+ORDER BY shohin_id;
+
+SELECT * -- noqa: disable=AM04
+FROM Shohin
+UNION ALL
+SELECT *
+FROM Shohin
+ORDER BY shohin_id;
+
+SELECT -- noqa: disable=CV08,ST02,ST06
+  (CASE WHEN TS.tenpo_id IS NULL THEN '不明' ELSE TS.tenpo_id END) AS tenpo_id,
+  (CASE WHEN TS.tenpo_mei IS NULL THEN '不明' ELSE TS.tenpo_mei END) AS tenpo_mei,
+  S.shohin_id,
+  S.shohin_mei,
+  S.hanbai_tanka
+FROM TenpoShohin TS
+RIGHT OUTER JOIN Shohin S ON TS.shohin_id = S.shohin_id;
