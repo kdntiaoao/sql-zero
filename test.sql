@@ -153,3 +153,24 @@ SELECT
   hanbai_tanka,
   avg_hanbai_tanka
 FROM AvgTankaByBunrui;
+
+-- 第 6 章
+SELECT
+  (
+    SELECT COUNT(*) FROM Shohin S1
+    WHERE S1.hanbai_tanka <= 1000
+  ) AS low_price,
+  (
+    SELECT COUNT(*) FROM Shohin S2
+    WHERE S2.hanbai_tanka BETWEEN 1001 AND 3000
+  ) AS mid_price,
+  (
+    SELECT COUNT(*) FROM Shohin S3
+    WHERE S3.hanbai_tanka >= 3001
+  ) AS high_price;
+
+SELECT
+  SUM(CASE WHEN hanbai_tanka <= 1000 THEN 1 ELSE 0 END) AS low_price,
+  SUM(CASE WHEN hanbai_tanka BETWEEN 1001 AND 3000 THEN 1 ELSE 0 END) AS mid_price,
+  SUM(CASE WHEN hanbai_tanka >= 3001 THEN 1 ELSE 0 END) AS high_price
+FROM Shohin;
