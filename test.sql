@@ -198,3 +198,18 @@ SELECT -- noqa: disable=CV08,ST02,ST06
   S.hanbai_tanka
 FROM TenpoShohin TS
 RIGHT OUTER JOIN Shohin S ON TS.shohin_id = S.shohin_id;
+
+-- 第 8 章
+SELECT
+  shohin_id,
+  shohin_mei,
+  hanbai_tanka,
+  SUM(hanbai_tanka) OVER (ORDER BY torokubi ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS current_max_tanka
+FROM Shohin;
+
+SELECT
+  shohin_id,
+  shohin_mei,
+  hanbai_tanka,
+  SUM(hanbai_tanka) OVER (ORDER BY torokubi) AS current_max_tanka
+FROM Shohin;
